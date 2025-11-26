@@ -29,11 +29,9 @@ Aucun envoi de données :
 
 Les exports CSV fournis par Revolut sont **inutilisables tels quels** pour calculer la fiscalité française :
 
-* Revolut calcule des plus-values en FIFO, *non conformes en France*.
 * Le fisc impose la méthode du **PMP (Prix Moyen Pondéré)**.
 * Le CSV mélange USD / EUR avec des FX variables.
 * Les stock splits, dividendes et regroupements doivent être retraités.
-* La CAF / RSA lit la fiscalité basée sur le PMP, pas sur les gains réels.
 
 Ce projet vise à :
 
