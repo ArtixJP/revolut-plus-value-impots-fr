@@ -4,9 +4,13 @@
 
 Par **Jules Pondard – Artix Technologies**
 
+**Testable ici : ** [Lien vers le simulateur en ligne](https://artixjp.github.io/revolut-plus-value-impots-fr/src/)
+
 ---
 
 ## 📌 Présentation
+
+Revolut ne permet aujourd'hui pas de calculer simplement les plus-values réalisées, et donc ce qu'on doit déclarer aux impôts. 
 
 Ce projet fournit une interface web entièrement locale (client-side) permettant d’analyser automatiquement un fichier CSV *Revolut Stocks* et d’en déduire :
 
@@ -104,6 +108,10 @@ TODO
 ---
 
 ## 🚀 Utilisation
+
+Tu peux utiliser le calculateur directement depuis le [lien suivant](https://artixjp.github.io/revolut-plus-value-impots-fr/src/) (tout est exécuté dans ton navigateur pour garantir la confidentialité de tes données).
+
+Tu peux aussi lancer directement la page depuis ton ordinateur par la procédure suivante : 
 
 1. Clone ou télécharge le repo :
 
