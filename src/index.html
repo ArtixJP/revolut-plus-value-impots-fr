@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Analyse de portefeuille Revolut</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- PapaParse : parsing CSV côté client -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <!-- Logique fonctionnelle (calculs purs) -->
+  <script src="analytics.js" defer></script>
+  <!-- Logique UI (DOM, rendu) -->
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Analyse de portefeuille Revolut</h1>
+      <p>
+        Upload ton fichier CSV Revolut, choisis le type d’agrégation, et calcule les plus-values et dividendes
+        par entreprise et par période. Tout est calculé localement dans ton navigateur.
+      </p>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="fileInput">Fichier CSV Revolut</label>
+          <input type="file" id="fileInput" accept=".csv,text/csv" />
+          <div class="notice">
+            Export “Stocks” Revolut (avec colonnes Date, Ticker, Type, Quantity,
+            Price per share, Total Amount, FX Rate).
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="aggSelect">Agrégation temporelle</label>
+          <select id="aggSelect">
+            <option value="yearly">Année (YYYY)</option>
+            <option value="monthly">Mois (YYYY-MM)</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="analyzeBtn" disabled>Analyser le fichier</button>
+
+      <div id="status" class="status"></div>
+      <div class="chips" id="summaryChips"></div>
+    </div>
+
+    <details open>
+      <summary>À propos</summary>
+    <div class="card">
+        <h2>Méthode de calcul et règles fiscales</h2>
+        <p>
+          Cette application calcule les plus-values conformément au régime fiscal français
+          en utilisant la méthode du 
+          <strong>PMP (Prix Moyen Pondéré)</strong> pour chaque titre. Depuis la réforme de 
+          2018 (introduction du Prélèvement Forfaitaire Unique – PFU), cette méthode est 
+          obligatoire pour tous les comptes-titres ordinaires (CTO).
+        </p>
+      
+        <p>
+          Pour chaque action achetée, le prix d’acquisition est converti en euros à l’aide
+          du taux de change (<strong>FX Rate</strong>) fourni dans le fichier Revolut.
+          Le PMP est alors recalculé à chaque nouvel achat comme une moyenne pondérée :
+        </p>
+      
+        <pre style="background:rgba(0,0,0,0.3); padding:10px; border-radius:8px;">
+      PMP_nouveau = (PMP * quantité_existante + prix_achat_eur * quantité_achetée)
+                    / (quantité_existante + quantité_achetée)
+        </pre>
+      
+        <p>
+          Lors d’une vente, la plus-value imposable est calculée comme :
+        </p>
+      
+        <pre style="background:rgba(0,0,0,0.3); padding:10px; border-radius:8px;">
+      Plus-value = quantité_vendue × (prix_vente_eur - PMP)
+        </pre>
+      
+        <p>
+          Les <strong>dividendes</strong> ne sont pas intégrés dans ce calcul de plus-value :
+          ils constituent des <em>revenus de capitaux mobiliers</em> imposés séparément 
+          (PFU 30% ou barème IR sur option). Les <strong>custody fees</strong> ne sont pas 
+          déductibles fiscalement, mais sont pris en compte ici pour refléter votre 
+          performance économique réelle.
+        </p>
+      
+        <p>
+          Les <strong>stock splits</strong> sont neutres d’un point de vue fiscal : quantité 
+          et PMP sont ajustés proportionnellement afin que la valeur totale ne change pas.
+        </p>
+      
+        <h3>Sources officielles</h3>
+        <ul>
+          <li>
+            <a href="https://bofip.impots.gouv.fr/bofip/3619-PGP.html/identifiant%3DBOI-RPPM-PVBMI-20-10-20-40-20191220" target="_blank">
+              BOFiP – Règles fiscales sur les plus-values mobilières (méthode du prix moyen pondéré)
+            </a>
+          </li>
+          <li>
+            <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F21618" target="_blank">
+              Service Public – Fiscalité des valeurs mobilières
+            </a>
+          </li>
+          <li>
+            <a href="https://bofip.impots.gouv.fr/bofip/12144-PGP" target="_blank">
+              BOFiP – Dividendes et revenus de capitaux mobiliers
+            </a>
+          </li>
+        </ul>
+      </div>
+    </details>
+      
+
+    <div id="results" style="display:none;">
+      <div class="card">
+        <h2>Plus-values par entreprise et par période</h2>
+        <p>
+          Montants en EUR, calculés via PMP (prix moyen pondéré) et prenant en compte le taux de change (FX) ainsi que les stock splits ou reverse splits.
+          Ligne “TOTAL” = somme de toutes les entreprises.
+        </p>
+        <div class="scroll-table" id="pvTableContainer"></div>
+      </div>
+
+      <div class="card">
+        <h2>Dividendes par entreprise et par période</h2>
+        <p>Montants en EUR, basés sur “DIVIDEND” × FX. Les dividendes ne sont pas intégrés dans le calcul de la plus-value.</p>
+        <div class="scroll-table" id="divTableContainer"></div>
+      </div>
+
+      <div class="card">
+        <h2>Custody fees par période</h2>
+        <p>
+          Frais de garde issus des lignes “CUSTODY FEE”, agrégés par période (global, tous titres confondus).
+        </p>
+        <div class="scroll-table" id="feeTableContainer"></div>
+        <div class="notice">
+          Rappel : fiscalement non déductibles, mais utiles pour voir la performance nette.
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
