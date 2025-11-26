@@ -91,8 +91,8 @@ Plus-value = quantité_vendue × (prix_vente_eur - PMP)
 
 ### Sources officielles
 
-* BOFiP – Plus-values mobilières : [https://bofip.impots.gouv.fr/bofip/1285-PGP](https://bofip.impots.gouv.fr/bofip/1285-PGP)
-* Service Public – Calcul des plus-values : [https://www.service-public.fr/particuliers/vosdroits/F3180](https://www.service-public.fr/particuliers/vosdroits/F3180)
+* BOFiP – Plus-values mobilières : [https://bofip.impots.gouv.fr/bofip/3619-PGP.html/identifiant%3DBOI-RPPM-PVBMI-20-10-20-40-20191220](https://bofip.impots.gouv.fr/bofip/3619-PGP.html/identifiant%3DBOI-RPPM-PVBMI-20-10-20-40-20191220)
+* Service Public – Fiscalité sur les plus values mobilies : [https://www.service-public.gouv.fr/particuliers/vosdroits/F21618](https://www.service-public.gouv.fr/particuliers/vosdroits/F21618)
 * BOFiP – Dividendes / RCM : [https://bofip.impots.gouv.fr/bofip/12144-PGP](https://bofip.impots.gouv.fr/bofip/12144-PGP)
 
 ---
@@ -162,8 +162,11 @@ Merci d’ouvrir une issue ou une pull request.
 ## 🧑‍💻 Auteur
 
 **Jules Pondard**
+
 Fondateur – **Artix Technologies**
+
 GitHub : [https://github.com/ArtixJP](https://github.com/ArtixJP)
+
 LinkedIn : [https://www.linkedin.com/in/julespondard/](https://www.linkedin.com/in/julespondard/)
 
 ---
@@ -181,4 +184,5 @@ Ce projet est distribué sous licence **MIT**, afin de permettre :
 ## ⭐ Support
 
 Si ce projet t’a été utile, pense à mettre une étoile ⭐ sur GitHub :
+
 👉 [https://github.com/ArtixJP/revolut-plus-value-impots-fr](https://github.com/ArtixJP/revolut-plus-value-impots-fr)
