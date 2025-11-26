@@ -4,7 +4,7 @@
 
 Par **Jules Pondard – Artix Technologies**
 
-**Testable ici : ** [Lien vers le simulateur en ligne](https://artixjp.github.io/revolut-plus-value-impots-fr/src/)
+Testable ici : [Lien vers le simulateur en ligne](https://artixjp.github.io/revolut-plus-value-impots-fr/src/)
 
 ---
 
